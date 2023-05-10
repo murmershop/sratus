@@ -1,0 +1,25 @@
+---
+import { SEO, Props as SEOProps } from "astro-seo";
+
+export interface Props extends SEOProps {
+  title: string;
+}
+
+const { title = "", ...seoProps } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO title={`${title} - MURMER.SHOP`} {...seoProps} />
+    <title>{title}</title>
+  </head>
+  <body class="container mx-auto">
+    <slot />
+  </body>
+</html>
