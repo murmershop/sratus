@@ -1,11 +1,13 @@
 ---
 import { SEO, Props as SEOProps } from "astro-seo";
+import { Arrow } from "../components/Arrow";
 
 export interface Props extends SEOProps {
   title: string;
+  arrow?: boolean;
 }
 
-const { title = "", ...seoProps } = Astro.props;
+const { title = "", arrow, ...seoProps } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -52,7 +54,10 @@ const { title = "", ...seoProps } = Astro.props;
       rel="stylesheet"
     />
   </head>
-  <body class="container mx-auto">
+  <body
+    class="container mx-auto min-w-full min-h-screen font-body text-gray-700"
+  >
     <slot />
+    {arrow && <Arrow />}
   </body>
 </html>
