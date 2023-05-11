@@ -1,19 +1,30 @@
 ---
-import Icon from "../../components/Icon.astro";
+import Logo from "../../svg/Logo";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="Paket Underwear" arrow>
-  <header class="text-center py-6 flex flex-col gap-2 mb-4">
-    <h1 class="text-2xl font-bold">Promo CD / Pakaian Dalam / Underwear</h1>
+  <header
+    class="text-center py-6 flex flex-col items-center gap-4 lg:gap-2 mb-1 lg:mb-4"
+  >
+    <div class="mb-2"><Logo width={250} height={250 / 4.4} /></div>
+    <div class="text-2xl font-bold">
+      Promo CD /
+      <br class="sm:block lg:hidden" />
+      Pakaian Dalam /
+      <br class="sm:block lg:hidden" />
+      Underwear
+    </div>
     <h2 class="text-3xl font-bold">
       12 PCS &mdash; Diskon <span class="text-rose-600">50%</span>
     </h2>
   </header>
   <div
-    class="text-center font-bold text-5xl py-5 border-t border-b border-gray-400 text-gray-900"
+    class="m-1 lg:m-0 text-center font-bold text-4xl lg:text-5xl py-5 border-8 lg:border-x-0 lg:border-y border-gray-500 text-gray-900"
   >
-    👉👉 99.000 dapat 12 PCS 👈👈
+    <span class="hidden lg:inline">👉👉</span>
+    99.000 DAPAT 12
+    <span class="hidden lg:inline">👈👈</span>
   </div>
   <main></main>
 </Layout>
