@@ -1,8 +1,16 @@
 import { FC, useEffect, useState } from "react";
-import { Select, PLACEHOLDER_VALUE } from "../components/Select";
+import {
+  Select,
+  PLACEHOLDER_VALUE,
+  SEPARATOR_VALUE,
+} from "../components/Select";
+import { API_URL } from "../constants/api";
+
+const isValidId = (path: string) =>
+  ![PLACEHOLDER_VALUE, SEPARATOR_VALUE].includes(path);
 
 const fetchAPI = async (paths: string[]) =>
-  fetch(`./api/${paths.join("/")}.json`)
+  fetch(`${API_URL}${paths.join("/")}.json`)
     .then((response) => response.json())
     .then((data) =>
       data
@@ -64,21 +72,19 @@ export const Form: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!selectedProvinceId) return;
+    if (!isValidId(selectedProvinceId)) return;
     fetchAPI(["regencies", selectedProvinceId]).then(setRegencies);
   }, [selectedProvinceId]);
 
   useEffect(() => {
-    if (!selectedRegencyId) return;
+    if (!isValidId(selectedRegencyId)) return;
     fetchAPI(["districts", selectedRegencyId]).then(setDistricts);
   }, [selectedRegencyId]);
 
   useEffect(() => {
-    if (!selectedDistrictId) return;
+    if (!isValidId(selectedDistrictId)) return;
     fetchAPI(["villages", selectedDistrictId]).then(setVilages);
   }, [selectedDistrictId]);
-
-  console.log({ selectedDistrictId });
 
   return (
     <form className="flex flex-col gap-2">
