@@ -1,6 +1,7 @@
 ---
 import Logo from "../../svg/Logo";
 import Layout from "../../layouts/Layout.astro";
+import { Form } from "../../views/Form";
 ---
 
 <Layout title="Paket Underwear" arrow>
@@ -19,12 +20,18 @@ import Layout from "../../layouts/Layout.astro";
       12 PCS &mdash; Diskon <span class="text-rose-600">50%</span>
     </h2>
   </header>
-  <div
-    class="m-1 lg:m-0 text-center font-bold text-4xl lg:text-5xl py-5 border-8 lg:border-x-0 lg:border-y border-gray-500 text-gray-900"
-  >
-    <span class="hidden lg:inline">👉👉</span>
-    99.000 DAPAT 12
-    <span class="hidden lg:inline">👈👈</span>
-  </div>
-  <main></main>
+
+  <main>
+    <div
+      class="m-1 lg:m-0 text-center font-bold text-4xl lg:text-5xl py-5 border-8 lg:border-x-0 lg:border-y border-gray-500 text-gray-900"
+    >
+      <span class="hidden lg:inline">👉👉</span>
+      99.000 DAPAT 12
+      <span class="hidden lg:inline">👈👈</span>
+    </div>
+
+    <Form client:load />
+  </main>
+
+  <footer></footer>
 </Layout>
