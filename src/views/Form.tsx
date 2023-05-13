@@ -85,6 +85,8 @@ export const Form: FC<FormProps> = ({ productId }) => {
     setSelectedVillageId(event.target.value);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (!isValidId(selectedProvinceId)) return;
     if (!isValidId(selectedRegencyId)) return;
     if (!isValidId(selectedDistrictId)) return;
