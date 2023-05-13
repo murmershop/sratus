@@ -181,7 +181,7 @@ export const Form: FC<FormProps> = ({ productId }) => {
 
   return (
     <form
-      name="contact"
+      name="order"
       data-netlify="true"
       netlify-honeypot="bot-field"
       className="flex flex-col gap-2"
