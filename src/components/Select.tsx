@@ -1,4 +1,5 @@
 import { FC } from "react";
+import clsx from "clsx";
 
 type SelectOption = {
   label: string;
@@ -27,14 +28,19 @@ export const Select: FC<SelectProps> = ({
   options = [],
   onChange,
 }) => (
-  <div className="flex flex-col gap-1">
-    <label htmlFor={id} className="block text-sm font-medium">
+  <div className="flex flex-col">
+    <label
+      htmlFor={id}
+      className={clsx("block text-sm font-medium", {
+        ["opacity-20"]: disabled,
+      })}
+    >
       {label}
     </label>
     <select
       id={id}
       name={id}
-      className="bg-gray-600 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      className=" border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:opacity-20"
       disabled={disabled}
       onChange={onChange}
       value={value}
