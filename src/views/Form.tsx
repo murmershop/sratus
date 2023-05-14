@@ -1,19 +1,37 @@
 import { FC, useEffect, useState } from "react";
 import { customAlphabet } from "nanoid";
+import { IoLogoWhatsapp as WhatsAppIcon } from "react-icons/io5";
+import { MdOutlineShoppingCartCheckout as CheckoutIcon } from "react-icons/md";
+import { shuffle } from "radash";
 import {
   Select,
   PLACEHOLDER_VALUE,
   SEPARATOR_VALUE,
 } from "../components/Select";
 import { API_URL } from "../constants/api";
+import { WA_API_URL, WA_NUMBERS } from "../constants/whatsapp";
+import { Input } from "../components/Input";
 
-const isValidId = (path: string) =>
-  ![PLACEHOLDER_VALUE, SEPARATOR_VALUE].includes(path);
+enum LocationKeys {
+  PROVINCE = "provinsi",
+  REGENCY = "kabupaten",
+  DISTRICT = "kecamatan",
+  VILLAGE = "kelurahan",
+}
+
+interface FormProps {
+  productId: string;
+  productFeature?: string;
+}
+
+const isValidId = (id: string) =>
+  ![PLACEHOLDER_VALUE, SEPARATOR_VALUE].includes(id);
 
 const nanoid = (prefix: string) =>
   [prefix, customAlphabet("1234567890abcdef", 7)().toUpperCase()]
     .filter((item) => item)
     .join("-");
+
 const fetchAPI = async (paths: string[]) =>
   fetch(`${API_URL}${paths.join("/")}.json`)
     .then((response) => response.json())
@@ -27,18 +45,10 @@ const fetchAPI = async (paths: string[]) =>
         .sort((a, z) => a.label.localeCompare(z.label))
     );
 
-enum LocationKeys {
-  PROVINCE = "provinsi",
-  REGENCY = "kabupaten",
-  DISTRICT = "kecamatan",
-  VILLAGE = "kelurahan",
-}
-
-interface FormProps {
-  productId: string;
-}
-
-export const Form: FC<FormProps> = ({ productId }) => {
+export const Form: FC<FormProps> = ({
+  productId,
+  productFeature = "produk ini",
+}) => {
   const [provinces, setProvinces] = useState([]);
   const [regencies, setRegencies] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -47,15 +57,31 @@ export const Form: FC<FormProps> = ({ productId }) => {
 
   const [selectedProvinceId, setSelectedProvinceId] =
     useState<string>(PLACEHOLDER_VALUE);
+  const selectedProvince = provinces.find(
+    (item) => item.value === selectedProvinceId
+  );
 
   const [selectedRegencyId, setSelectedRegencyId] =
     useState<string>(PLACEHOLDER_VALUE);
+  const selectedRegency = regencies.find(
+    (item) => item.value === selectedRegencyId
+  );
 
   const [selectedDistrictId, setSelectedDistrictId] =
     useState<string>(PLACEHOLDER_VALUE);
+  const selectedDistrict = districts.find(
+    (item) => item.value === selectedDistrictId
+  );
 
   const [selectedVillageId, setSelectedVillageId] =
     useState<string>(PLACEHOLDER_VALUE);
+  const selectedVillage = villages.find(
+    (item) => item.value === selectedVillageId
+  );
+
+  const [name, setName] = useState<string>();
+
+  const [additionalAddress, setAdditionalAddress] = useState<string>();
 
   const randomizeOrderId = () => setOrderId(nanoid(productId));
 
@@ -84,43 +110,38 @@ export const Form: FC<FormProps> = ({ productId }) => {
   const handleChangeVillage = (event: React.ChangeEvent<HTMLSelectElement>) =>
     setSelectedVillageId(event.target.value);
 
+  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setName(event.target.value);
+
+  const handleAdditionalAddress = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => setAdditionalAddress(event.target.value);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!isValidId(selectedProvinceId)) return;
-    if (!isValidId(selectedRegencyId)) return;
-    if (!isValidId(selectedDistrictId)) return;
-    if (!isValidId(selectedVillageId)) return;
+    if (!selectedProvince) return;
+    if (!selectedRegency) return;
+    if (!selectedDistrict) return;
+    if (!selectedVillage) return;
 
     const formData = new FormData(event.currentTarget);
     const rawData = [...formData.entries()].reduce((acc, [key, value]) => {
       switch (key) {
         case LocationKeys.PROVINCE:
-          acc.push([
-            key,
-            provinces.find((item) => item.value === selectedProvinceId),
-          ]);
+          acc.push([key, selectedProvince]);
           break;
 
         case LocationKeys.REGENCY:
-          acc.push([
-            key,
-            regencies.find((item) => item.value === selectedRegencyId),
-          ]);
+          acc.push([key, selectedRegency]);
           break;
 
         case LocationKeys.DISTRICT:
-          acc.push([
-            key,
-            districts.find((item) => item.value === selectedDistrictId),
-          ]);
+          acc.push([key, selectedDistrict]);
           break;
 
         case LocationKeys.VILLAGE:
-          acc.push([
-            key,
-            villages.find((item) => item.value === selectedVillageId),
-          ]);
+          acc.push([key, selectedVillage]);
           break;
 
         default:
@@ -153,7 +174,30 @@ export const Form: FC<FormProps> = ({ productId }) => {
       body: body,
     })
       .then(() => {
+        const WA_NUMBER = shuffle(WA_NUMBERS);
+        const message = encodeURIComponent(
+          `Halo kak, saya mau pesan ${productFeature}:\n\nNama: ${name.toUpperCase()}\nAlamat: ${[
+            additionalAddress,
+            selectedVillage.label,
+            selectedDistrict.label,
+            selectedRegency.label,
+            selectedProvince.label,
+          ]
+            .filter((item) => item)
+            .join(
+              ", "
+            )}\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #${orderId}`
+        );
+        window.open(`${WA_API_URL}${WA_NUMBER}&text=${message}`);
+      })
+      .then(() => {
         randomizeOrderId();
+        setSelectedProvinceId(PLACEHOLDER_VALUE);
+        setSelectedRegencyId(PLACEHOLDER_VALUE);
+        setSelectedDistrictId(PLACEHOLDER_VALUE);
+        setSelectedVillageId(PLACEHOLDER_VALUE);
+        setName("");
+        setAdditionalAddress("");
       })
       .catch((error) => console.error(error));
   };
@@ -179,17 +223,45 @@ export const Form: FC<FormProps> = ({ productId }) => {
   }, [selectedDistrictId]);
   //#endregion
 
-  console.log({ orderId });
-
   return (
     <form
       name="order"
       data-netlify="true"
       netlify-honeypot="bot-field"
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-4 mx-auto max-w-xl"
       onSubmit={handleSubmit}
     >
-      <h3 className="text-2xl text-center">ALAMAT PENGIRIMAN</h3>
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 text-xl">
+          <CheckoutIcon /> FORMULIR PEMESANAN (ORDER)
+        </div>
+
+        <div className="text-xs text-red-800">
+          * PAKAI SISTEM{" "}
+          <span className="font-bold underline">COD (CASH ON DELIVERY)</span> /
+          BAYAR DITEMPAT.
+        </div>
+
+        <div className="text-xs text-red-800">
+          * DIANTAR PERSIS sampai depan rumah Anda,{" "}
+          <span className="font-bold underline">
+            HARGA BELUM TERMASUK ONGKIR.
+          </span>
+        </div>
+
+        <div className="text-xs">* ISI NAMA DAN ALAMAT LENGKAP PENERIMA</div>
+      </div>
+
+      <hr />
+
+      <Input
+        id="nama"
+        label="Nama Lengkap Penerima"
+        placeholder="contoh: Siti Nurjanah"
+        value={name}
+        onChange={handleChangeName}
+      />
+
       <Select
         id={LocationKeys.PROVINCE}
         label="Pilih Provinsi"
@@ -229,9 +301,35 @@ export const Form: FC<FormProps> = ({ productId }) => {
         onChange={handleChangeVillage}
       />
 
+      <Input
+        id="alamat-tambahan"
+        label="Alamat tambahan (Desa/Dukuh, RT/RW, No. Rumah)"
+        placeholder="contoh: Gg. Kelinci No. 34 A"
+        disabled={
+          !name ||
+          !(
+            isValidId(selectedProvinceId) &&
+            isValidId(selectedRegencyId) &&
+            isValidId(selectedDistrictId)
+          )
+        }
+        value={additionalAddress}
+        onChange={handleAdditionalAddress}
+      />
+
       <input type="hidden" name="order-id" value={orderId} />
       <input type="hidden" name="form-name" value="order" />
-      <button type="submit">Testing</button>
+      <button
+        className="bg-green-500 text-white text-xl font-semibold rounded-lg mt-2 py-4 flex items-center justify-center gap-2"
+        type="submit"
+      >
+        <WhatsAppIcon />
+        <span>PESAN! Klik Chat WhatsApp</span>
+      </button>
+      <div className="text-xs text-center text-green-700">
+        [[ Setelah mengirim chat via WhatsApp, tunggu balasan dari kami untuk
+        konfirmasi. ]]
+      </div>
     </form>
   );
 };
