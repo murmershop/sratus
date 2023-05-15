@@ -1,7 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { customAlphabet } from "nanoid";
-import { RiWhatsappFill as WhatsAppIcon } from "react-icons/ri";
-import { MdOutlineShoppingCartCheckout as CheckoutIcon } from "react-icons/md";
 import { shuffle } from "radash";
 import {
   Select,
@@ -11,6 +9,8 @@ import {
 import { API_URL } from "../constants/api";
 import { WA_API_URL, WA_NUMBERS } from "../constants/whatsapp";
 import { Input } from "../components/Input";
+import { WhatsAppIcon } from "../svg/WhatsApp";
+import { CheckoutIcon } from "../svg/Checkout";
 
 enum LocationKeys {
   PROVINCE = "provinsi",
