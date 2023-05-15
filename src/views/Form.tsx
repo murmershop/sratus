@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { customAlphabet } from "nanoid";
-import { IoLogoWhatsapp as WhatsAppIcon } from "react-icons/io5";
+import { RiWhatsappFill as WhatsAppIcon } from "react-icons/ri";
 import { MdOutlineShoppingCartCheckout as CheckoutIcon } from "react-icons/md";
 import { shuffle } from "radash";
 import {
