@@ -5,8 +5,9 @@ import sitemap from "@astrojs/sitemap";
 import image from "@astrojs/image";
 import partytown from "@astrojs/partytown";
 import prefetch from "@astrojs/prefetch";
-
 import compress from "astro-compress";
+
+import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +21,7 @@ export default defineConfig({
     }),
     partytown(),
     prefetch(),
+    mdx(),
     compress({
       html: true,
       css: true,
