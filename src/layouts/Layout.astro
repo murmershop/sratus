@@ -1,13 +1,18 @@
 ---
 import { SEO, Props as SEOProps } from "astro-seo";
 import { Arrow } from "../components/Arrow";
+import { seo as seoConfig } from "../../web.config.json";
 
 export interface Props extends SEOProps {
-  title: string;
+  title?: string;
   arrow?: boolean;
 }
 
-const { title = "", arrow, ...seoProps } = Astro.props;
+const { arrow, ...seoProps } = Astro.props;
+const combinedSeoProps = {
+  ...seoConfig,
+  ...seoProps,
+};
 ---
 
 <!DOCTYPE html>
@@ -16,8 +21,7 @@ const { title = "", arrow, ...seoProps } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <SEO title={`${title} - MURMER.SHOP`} {...seoProps} />
-    <title>{title}</title>
+    <SEO {...combinedSeoProps} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link
       rel="apple-touch-icon"

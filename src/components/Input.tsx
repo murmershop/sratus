@@ -21,7 +21,7 @@ export const Input: FC<InputProps> = ({
   <div className="flex flex-col">
     <label
       htmlFor={id}
-      className={clsx("block text-sm font-medium", {
+      className={clsx("text-gray-900 block text-sm font-medium", {
         ["opacity-20"]: disabled,
       })}
     >

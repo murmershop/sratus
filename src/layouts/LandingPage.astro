@@ -1,0 +1,50 @@
+---
+import Logo from "../svg/Logo";
+import Layout from "../layouts/Layout.astro";
+import { Form } from "../views/Form";
+
+export interface Props {
+  title: string;
+  productId: string;
+  productFeature: string;
+}
+
+const { title, productId, productFeature } = Astro.props;
+---
+
+<Layout title={title} arrow>
+  <header
+    class="text-center py-6 flex flex-col items-center gap-4 lg:gap-2 mb-1 lg:mb-4"
+  >
+    <div class="mb-2"><Logo width={250} height={250 / 4.4} /></div>
+
+    <h1 class="text-2xl font-bold">
+      <slot name="headline" />
+    </h1>
+
+    <h2 class="text-3xl font-bold">
+      <slot name="subheadline" />
+    </h2>
+  </header>
+
+  <main class="mb-4 flex flex-col gap-4">
+    <div
+      class="m-1 lg:m-0 text-center font-bold text-4xl lg:text-5xl py-5 border-8 lg:border-x-0 lg:border-y border-gray-500 text-gray-900"
+    >
+      <slot name="promo" />
+    </div>
+
+    <article
+      class="mx-auto my-4 max-w-lg lg:max-w-screen-lg text-lg text-gray-900 flex flex-col gap-6"
+      slot="article"
+    >
+      <slot name="article" />
+    </article>
+
+    <hr />
+
+    <Form client:load productId={productId} productFeature={productFeature} />
+  </main>
+
+  <footer></footer>
+</Layout>

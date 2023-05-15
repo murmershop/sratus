@@ -31,7 +31,7 @@ export const Select: FC<SelectProps> = ({
   <div className="flex flex-col">
     <label
       htmlFor={id}
-      className={clsx("block text-sm font-medium", {
+      className={clsx("block text-gray-900 text-sm font-medium", {
         ["opacity-20"]: disabled,
       })}
     >

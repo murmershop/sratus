@@ -228,11 +228,11 @@ export const Form: FC<FormProps> = ({
       name="order"
       data-netlify="true"
       netlify-honeypot="bot-field"
-      className="flex flex-col gap-4 mx-auto max-w-xl"
+      className="flex flex-col gap-4 mx-auto max-w-lg lg:max-w-screen-lg"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2 text-xl">
+        <div className="flex items-center gap-2 text-black text-xl">
           <CheckoutIcon /> FORMULIR PEMESANAN (ORDER)
         </div>
 
@@ -320,15 +320,15 @@ export const Form: FC<FormProps> = ({
       <input type="hidden" name="order-id" value={orderId} />
       <input type="hidden" name="form-name" value="order" />
       <button
-        className="bg-green-500 text-white text-xl font-semibold rounded-lg mt-2 py-4 flex items-center justify-center gap-2"
+        className="bg-green-500 text-white text-xl font-semibold rounded-lg mt-2 py-4 px-2 flex items-center justify-center gap-2"
         type="submit"
       >
         <WhatsAppIcon />
-        <span>PESAN! Klik Chat WhatsApp</span>
+        <span>PESAN! (Klik chat WhatsApp)</span>
       </button>
-      <div className="text-xs text-center text-green-700">
-        [[ Setelah mengirim chat via WhatsApp, tunggu balasan dari kami untuk
-        konfirmasi. ]]
+      <div className="text-sm text-center text-green-700">
+        ❗️❗️ Setelah mengirim chat via WhatsApp, tunggu balasan dari kami
+        untuk konfirmasi. ❗️❗️
       </div>
     </form>
   );
