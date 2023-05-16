@@ -20,7 +20,7 @@ export default defineConfig({
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
-    partytown(),
+    // partytown(),
     // prefetch(),
     mdx(),
     compress({
