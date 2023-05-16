@@ -320,7 +320,7 @@ export const Form: FC<FormProps> = ({
       <input type="hidden" name="order-id" value={orderId} />
       <input type="hidden" name="form-name" value="order" />
       <button
-        className="bg-green-500 text-white text-xl font-semibold rounded-lg mt-2 py-4 px-2 flex items-center justify-center gap-2"
+        className="bg-green-700 text-white text-xl font-semibold rounded-lg mt-2 py-4 px-2 flex items-center justify-center gap-2 hover:bg-green-600 active:bg-green-600"
         type="submit"
       >
         <WhatsAppIcon />

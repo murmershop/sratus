@@ -1,18 +1,29 @@
 ---
+import { Props as SEOProps } from "astro-seo";
 import Logo from "../svg/Logo";
 import Layout from "../layouts/Layout.astro";
 import { Form } from "../views/Form";
 
-export interface Props {
-  title: string;
+export interface Props extends SEOProps {
+  image: string;
   productId: string;
   productFeature: string;
 }
 
-const { title, productId, productFeature } = Astro.props;
+const { productId, productFeature, image, ...seoProps } = Astro.props;
+const computedSeoProps = {
+  ...seoProps,
+  openGraph: {
+    basic: {
+      title: seoProps?.title,
+      type: "image/jpeg",
+      image,
+    },
+  },
+};
 ---
 
-<Layout title={title} arrow>
+<Layout {...computedSeoProps} arrow>
   <header
     class="text-center py-6 flex flex-col items-center gap-4 lg:gap-2 mb-1 lg:mb-4"
   >
@@ -34,12 +45,20 @@ const { title, productId, productFeature } = Astro.props;
       <slot name="promo" />
     </div>
 
+    <div class="flex flex-col lg:flex-row mx-auto gap-10">
+      <slot name="image-1" />
+    </div>
+
     <article
       class="mx-auto my-4 max-w-lg lg:max-w-screen-lg text-lg text-gray-900 flex flex-col gap-6"
       slot="article"
     >
       <slot name="article" />
     </article>
+
+    <div class="flex flex-col lg:flex-row lg mx-auto gap-10">
+      <slot name="image-2" />
+    </div>
 
     <hr />
 
