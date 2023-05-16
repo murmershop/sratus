@@ -12,7 +12,6 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   site: "https://murmer.shop",
-  output: "static",
   integrations: [
     tailwind(),
     react(),
@@ -20,8 +19,8 @@ export default defineConfig({
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
-    // partytown(),
-    // prefetch(),
+    partytown(),
+    prefetch(),
     mdx(),
     compress({
       html: true,
