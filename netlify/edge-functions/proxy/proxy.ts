@@ -1,4 +1,6 @@
-export default async (req: Request) => {
+import type { Config, Context } from "https://edge.netlify.com";
+
+export default async (req: Request, context: Context) => {
   const url = new URL(req.url);
   const params = url.searchParams;
 
@@ -14,4 +16,8 @@ export default async (req: Request) => {
     console.error(err);
     return new Response("Error fetching " + urlParam);
   }
+};
+
+export const config: Config = {
+  path: "/",
 };
