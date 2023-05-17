@@ -12,10 +12,10 @@ serve(async (req: Request) => {
     console.log("request to %s", decodedUrl);
     const proxyRes = await fetch(decodedUrl);
     return new Response(proxyRes.body, {
-      headers: {
-        ...proxyRes.headers,
+      headers: new Headers({
         "Access-Control-Allow-Origin": "*",
-      },
+        accept: "text/plain",
+      }),
     });
   } catch (err) {
     console.error(err);
