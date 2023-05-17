@@ -14,7 +14,7 @@ serve(async (req: Request) => {
     return new Response(proxyRes.body, {
       headers: new Headers({
         "Access-Control-Allow-Origin": "*",
-        accept: "text/plain",
+        "content-type": "application/javascript; charset=UTF-8",
       }),
     });
   } catch (err) {
