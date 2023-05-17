@@ -22,6 +22,15 @@ export default defineConfig({
     }),
     partytown({
       config: {
+        resolveUrl: function (url, location, type) {
+          if (type === "script") {
+            var proxyUrl = new URL(config.site);
+            proxyUrl.searchParams.append("url", url.href);
+            return proxyUrl;
+          }
+
+          return url;
+        },
         forward: ["dataLayer.push"],
       },
     }),
