@@ -5,6 +5,13 @@ export default async (req: Request) => {
   const urlParam = params.get("url");
   if (!urlParam) return new Response("");
 
-  const proxyRes = await fetch(decodeURIComponent(urlParam));
-  return proxyRes;
+  try {
+    const decodedUrl = decodeURIComponent(urlParam);
+    console.log("request to %s", decodedUrl);
+    const proxyRes = await fetch(decodedUrl);
+    return proxyRes;
+  } catch (err) {
+    console.error(err);
+    return new Response("Error fetching " + urlParam);
+  }
 };
