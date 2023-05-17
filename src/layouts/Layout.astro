@@ -1,7 +1,7 @@
 ---
 import { SEO, Props as SEOProps } from "astro-seo";
 import { Arrow } from "../components/Arrow";
-import { seo as seoConfig } from "../../web.config.json";
+import { seo as seoConfig, gtm as gtmId } from "../../web.config.json";
 
 export interface Props extends SEOProps {
   title?: string;
@@ -51,6 +51,7 @@ const combinedSeoProps = {
     <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
     <!-- Google Tag Manager -->
+    <script is:inline define:vars={{ __GTM_ID: gtmId }}> window.__GTM_ID = __GTM_ID; </script>
     <script type="text/partytown">
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -61,7 +62,7 @@ const combinedSeoProps = {
         j.async = true;
         j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
         f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-W6NW62C");
+      })(window, document, "script", "dataLayer", __GTM_ID);
     </script>
     <!-- End Google Tag Manager -->
     <style>
@@ -337,7 +338,7 @@ const combinedSeoProps = {
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-W6NW62C"
+        src={"https://www.googletagmanager.com/ns.html?id=" + gtmId}
         height="0"
         width="0"
         style="display:none;visibility:hidden"></iframe></noscript
