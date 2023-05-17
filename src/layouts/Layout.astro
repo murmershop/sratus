@@ -51,8 +51,7 @@ const combinedSeoProps = {
     <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
     <!-- Google Tag Manager -->
-    <script is:inline define:vars={{ __GTM_ID: gtmId }}> window.__GTM_ID = __GTM_ID; </script>
-    <script type="text/partytown">
+    <script type="text/partytown" define:vars={{ __GTM_ID: gtmId }}>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
