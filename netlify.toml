@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/proxy/?url=*"
-  to = "https://murmer.shop/proxy/?url=:splat"
-  status = 200
-  force = true
