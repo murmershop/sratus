@@ -1,0 +1,8 @@
+[[redirects]]
+  from = "/proxy/?url=*"
+  to = "/.netlify/functions/proxy?url=:splat"
+  status = 200
+
+[[edge_functions]]
+function = "proxy"
+path = "/proxy"
