@@ -188,6 +188,11 @@ export const Form: FC<FormProps> = ({
               ", "
             )}\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #${orderId}`
         );
+
+        (window as any).dataLayer.push({
+          event: "ASKING_ONGKIR",
+          kabupaten: selectedRegency.label,
+        });
         window.open(`${WA_API_URL}${WA_NUMBER}&text=${message}`);
       })
       .then(() => {
