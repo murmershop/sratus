@@ -1,6 +1,6 @@
-import type { Config, Context } from "https://edge.netlify.com";
+import { serve } from "https://deno.land/std/http/mod.ts";
 
-export default async (req: Request, context: Context) => {
+serve(async (req: Request) => {
   const url = new URL(req.url);
   const params = url.searchParams;
 
@@ -11,13 +11,14 @@ export default async (req: Request, context: Context) => {
     const decodedUrl = decodeURIComponent(urlParam);
     console.log("request to %s", decodedUrl);
     const proxyRes = await fetch(decodedUrl);
-    return proxyRes;
+    return new Response(proxyRes.body, {
+      headers: {
+        ...proxyRes.headers,
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
   } catch (err) {
     console.error(err);
     return new Response("Error fetching " + urlParam);
   }
-};
-
-export const config: Config = {
-  path: "/",
-};
+});
