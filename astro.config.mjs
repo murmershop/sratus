@@ -26,7 +26,8 @@ export default defineConfig({
         resolveUrl(url, location, type) {
           if (type !== "script") return url;
           const proxyUrl = new URL("https://murmershop-proxy.deno.dev/");
-          urlParam = url.searchParams.get("url");
+          const reqUrl = new URL(url.href);
+          const urlParam = reqUrl.searchParams.get("url");
           proxyUrl.searchParams.append("url", urlParam);
           return proxyUrl;
         },
