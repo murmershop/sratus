@@ -24,11 +24,9 @@ export default defineConfig({
       config: {
         forward: ["dataLayer.push"],
         resolveUrl(url, location, type) {
-          if (type !== "script") return url;
           const proxyUrl = new URL("https://murmershop-proxy.deno.dev/");
-          const reqUrl = new URL(url.href);
-          const urlParam = reqUrl.searchParams.get("url");
-          proxyUrl.searchParams.append("url", urlParam);
+          if (type !== "script" || url.host.includes(proxyUrl.host)) return url;
+          proxyUrl.searchParams.append("url", url.href);
           return proxyUrl;
         },
       },
