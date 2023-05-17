@@ -20,11 +20,11 @@ export default defineConfig({
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
-    partytown({
-      config: {
-        forward: ["dataLayer.push"],
-      },
-    }),
+    // partytown({
+    //   config: {
+    //     forward: ["dataLayer.push"],
+    //   },
+    // }),
     prefetch(),
     mdx(),
     compress({
