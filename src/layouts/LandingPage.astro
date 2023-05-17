@@ -17,7 +17,7 @@ const computedSeoProps = {
     basic: {
       title: seoProps?.title,
       type: "image/jpeg",
-      image,
+      image: Astro.site.origin + image,
     },
   },
 };
@@ -62,7 +62,7 @@ const computedSeoProps = {
 
     <hr />
 
-    <Form productId={productId} productFeature={productFeature} />
+    <Form client:only productId={productId} productFeature={productFeature} />
   </main>
 
   <footer></footer>

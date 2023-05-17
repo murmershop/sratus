@@ -6,12 +6,13 @@ import image from "@astrojs/image";
 import partytown from "@astrojs/partytown";
 import prefetch from "@astrojs/prefetch";
 import compress from "astro-compress";
-
 import mdx from "@astrojs/mdx";
+
+import config from "./web.config.json";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://murmer.shop",
+  site: config.site,
   integrations: [
     tailwind(),
     react(),

@@ -1,3 +1,3 @@
-export const API_URL = import.meta.env.PROD
-  ? "https://murmer.shop/api/"
-  : "/api/";
+import config from "../../web.config.json";
+
+export const API_URL = import.meta.env.PROD ? `${config.site}/api/` : "/api/";
