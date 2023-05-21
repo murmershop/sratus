@@ -2,9 +2,10 @@
   "site": "https://murmer.shop",
   "whatsapp": ["6281353799761"],
   "gtm": "GTM-W6NW62C",
+  "message": "Halo kak, saya mau pesan $produk:\n\nNama: $nama\nAlamat: $alamat\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #$orderId",
   "seo": {
     "title": "Toko Serba Murah Meriah",
     "titleTemplate": "%s - MURMER.SHOP",
-    "description": ""
+    "description": "Dapatkan produk-produk berkualitas dengan harga murah meriah hanya di MURMER.SHOP"
   }
 }

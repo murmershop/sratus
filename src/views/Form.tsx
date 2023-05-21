@@ -8,9 +8,11 @@ import {
 } from "../components/Select";
 import { API_URL } from "../constants/api";
 import { WA_API_URL, WA_NUMBERS } from "../constants/whatsapp";
+import { MESSAGE_TEMPLATE } from "../constants/misc";
 import { Input } from "../components/Input";
 import { WhatsAppIcon } from "../svg/WhatsApp";
 import { CheckoutIcon } from "../svg/Checkout";
+import { AnalyticsEventNames } from "../constants/events";
 
 enum LocationKeys {
   PROVINCE = "provinsi",
@@ -19,9 +21,11 @@ enum LocationKeys {
   VILLAGE = "kelurahan",
 }
 
-interface FormProps {
+export interface FormProps {
   productId: string;
   productFeature?: string;
+  whatsappNumber?: string[];
+  message?: string;
 }
 
 const isValidId = (id: string) =>
@@ -48,6 +52,8 @@ const fetchAPI = async (paths: string[]) =>
 export const Form: FC<FormProps> = ({
   productId,
   productFeature = "produk ini",
+  whatsappNumber,
+  message,
 }) => {
   const [provinces, setProvinces] = useState([]);
   const [regencies, setRegencies] = useState([]);
@@ -120,6 +126,7 @@ export const Form: FC<FormProps> = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!name) return alert("Mohon isi nama Anda");
     if (!selectedProvince) return;
     if (!selectedRegency) return;
     if (!selectedDistrict) return;
@@ -174,29 +181,42 @@ export const Form: FC<FormProps> = ({
       body: body,
     })
       .then(() => {
-        const WA_NUMBER = shuffle(WA_NUMBERS);
-        const message = encodeURIComponent(
-          `Halo kak, saya mau pesan ${productFeature}:\n\nNama: ${name.toUpperCase()}\nAlamat: ${[
-            additionalAddress,
-            selectedVillage.label,
-            selectedDistrict.label,
-            selectedRegency.label,
-            selectedProvince.label,
-          ]
-            .filter((item) => item)
-            .join(
-              ", "
-            )}\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #${orderId}`
+        const phoneNumber = shuffle(whatsappNumber || WA_NUMBERS);
+
+        const alamat = [
+          additionalAddress,
+          selectedVillage.label,
+          selectedDistrict.label,
+          selectedRegency.label,
+          selectedProvince.label,
+        ]
+          .filter((item) => item)
+          .join(", ");
+
+        const formattedMessage = (message || MESSAGE_TEMPLATE)
+          .replace("$produk", productFeature)
+          .replace("$nama", name.toUpperCase())
+          .replace("$alamat", alamat)
+          .replace("$orderId", orderId);
+
+        const encodedMessage = encodeURIComponent(formattedMessage).replace(
+          /%5Cn/g,
+          "%0A"
         );
 
-        (window as any).dataLayer.push({
-          event: "ASKING_ONGKIR",
-          provinsi: selectedProvince.label,
-          kabupaten: selectedRegency.label,
-          kecamatan: selectedDistrict.label,
-          kelurahan: selectedVillage.label,
-        });
-        window.open(`${WA_API_URL}${WA_NUMBER}&text=${message}`);
+        if (import.meta.env.PROD) {
+          (window as any).dataLayer.push({
+            event: AnalyticsEventNames.ASKING_ONGKIR,
+            provinsi: selectedProvince.label,
+            kabupaten: selectedRegency.label,
+            kecamatan: selectedDistrict.label,
+            kelurahan: selectedVillage.label,
+          });
+        }
+
+        window.open(
+          `${WA_API_URL}?phone=${phoneNumber}&text=${encodedMessage}`
+        );
       })
       .then(() => {
         randomizeOrderId();
@@ -217,17 +237,48 @@ export const Form: FC<FormProps> = ({
 
   useEffect(() => {
     if (!isValidId(selectedProvinceId)) return;
-    fetchAPI(["regencies", selectedProvinceId]).then(setRegencies);
+    fetchAPI(["regencies", selectedProvinceId]).then((regenciesData) => {
+      const { cities, regencies } = regenciesData.reduce(
+        (acc, item) => {
+          if (item.label.includes("KOTA")) {
+            acc.cities.push(item);
+          }
+
+          if (item.label.includes("KABUPATEN")) {
+            acc.regencies.push(item);
+          }
+
+          return acc;
+        },
+        { cities: [], regencies: [] }
+      );
+
+      setRegencies([...cities, ...regencies]);
+    });
   }, [selectedProvinceId]);
 
   useEffect(() => {
     if (!isValidId(selectedRegencyId)) return;
-    fetchAPI(["districts", selectedRegencyId]).then(setDistricts);
+    fetchAPI(["districts", selectedRegencyId]).then((districts) =>
+      setDistricts(
+        districts.map((item) => ({
+          ...item,
+          label: `KECAMATAN ${item.label}`,
+        }))
+      )
+    );
   }, [selectedRegencyId]);
 
   useEffect(() => {
     if (!isValidId(selectedDistrictId)) return;
-    fetchAPI(["villages", selectedDistrictId]).then(setVilages);
+    fetchAPI(["villages", selectedDistrictId]).then((villages) =>
+      setVilages(
+        villages.map((item) => ({
+          ...item,
+          label: `DESA ${item.label}`,
+        }))
+      )
+    );
   }, [selectedDistrictId]);
   //#endregion
 

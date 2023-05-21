@@ -2,15 +2,22 @@
 import { Props as SEOProps } from "astro-seo";
 import Logo from "../svg/Logo";
 import Layout from "../layouts/Layout.astro";
-import { Form } from "../views/Form";
+import { Form, FormProps } from "../views/Form";
 
-export interface Props extends SEOProps {
+export interface Props extends SEOProps, FormProps {
   image: string;
-  productId: string;
-  productFeature: string;
 }
 
-const { productId, productFeature, image, ...seoProps } = Astro.props;
+const {
+  productId,
+  productFeature,
+  image,
+  message,
+  whatsappNumber,
+  ...seoProps
+} = Astro.props;
+
+const formProps = { productId, productFeature, message, whatsappNumber };
 const computedSeoProps = {
   ...seoProps,
   openGraph: {
@@ -62,7 +69,7 @@ const computedSeoProps = {
 
     <hr />
 
-    <Form client:only productId={productId} productFeature={productFeature} />
+    <Form client:only {...formProps} />
   </main>
 
   <footer></footer>
