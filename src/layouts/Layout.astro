@@ -13,6 +13,7 @@ const combinedSeoProps = {
   ...seoConfig,
   ...seoProps,
 };
+const env = import.meta.env.PROD ? "production" : "development";
 ---
 
 <!DOCTYPE html>
@@ -51,7 +52,8 @@ const combinedSeoProps = {
     <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
     <!-- Google Tag Manager -->
-    <script type="text/partytown" define:vars={{ __GTM_ID: gtmId }}>
+    <script type="text/partytown" define:vars={{ gtmId, env }}>
+      if (env === "development") return console.log({ env, gtmId });
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -61,7 +63,7 @@ const combinedSeoProps = {
         j.async = true;
         j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
         f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", __GTM_ID);
+      })(window, document, "script", "dataLayer", gtmId);
     </script>
     <!-- End Google Tag Manager -->
     <style>
