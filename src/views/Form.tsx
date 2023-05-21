@@ -191,7 +191,10 @@ export const Form: FC<FormProps> = ({
 
         (window as any).dataLayer.push({
           event: "ASKING_ONGKIR",
+          provinsi: selectedProvince.label,
           kabupaten: selectedRegency.label,
+          kecamatan: selectedDistrict.label,
+          kelurahan: selectedVillage.label,
         });
         window.open(`${WA_API_URL}${WA_NUMBER}&text=${message}`);
       })
