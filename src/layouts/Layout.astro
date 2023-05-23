@@ -346,6 +346,6 @@ const env = import.meta.env.PROD ? "production" : "development";
     >
     <!-- End Google Tag Manager (noscript) -->
     <slot />
-    {arrow && <Arrow />}
+    {arrow && <Arrow client:only />}
   </body>
 </html>
