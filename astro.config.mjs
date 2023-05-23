@@ -13,6 +13,15 @@ import config from "./web.config.json";
 // https://astro.build/config
 export default defineConfig({
   site: config.site,
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          assetFileNames: "assets/[hash][extname]",
+        },
+      },
+    },
+  },
   integrations: [
     tailwind(),
     react(),
