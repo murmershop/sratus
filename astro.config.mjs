@@ -7,7 +7,7 @@ import partytown from "@astrojs/partytown";
 import prefetch from "@astrojs/prefetch";
 import compress from "astro-compress";
 import mdx from "@astrojs/mdx";
-
+import critters from "astro-critters";
 import config from "./web.config.json";
 
 // https://astro.build/config
@@ -46,6 +46,15 @@ export default defineConfig({
       html: true,
       css: true,
       js: true,
+    }),
+    critters({
+      path: [
+        // inline dist
+        "./dist",
+
+        // inline dist one more time into a different directory
+        new Map([["./dist", "./dist-inlined"]]),
+      ],
     }),
   ],
 });
