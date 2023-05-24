@@ -214,9 +214,7 @@ export const Form: FC<FormProps> = ({
           });
         }
 
-        window.open(
-          `${WA_API_URL}?phone=${phoneNumber}&text=${encodedMessage}`
-        );
+        window.location.href = `${WA_API_URL}?phone=${phoneNumber}&text=${encodedMessage}`;
       })
       .then(() => {
         randomizeOrderId();
