@@ -47,6 +47,8 @@ export default defineConfig({
       css: true,
       js: true,
     }),
-    critters(),
+    critters({
+      path: ["./dist"],
+    }),
   ],
 });

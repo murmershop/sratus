@@ -31,7 +31,6 @@ const computedSeoProps = {
 };
 ---
 
-<FakeBuyer client:only />
 <Layout {...computedSeoProps} arrow>
   <header
     class="text-center py-6 flex flex-col items-center gap-4 lg:gap-2 mb-1 lg:mb-4"
@@ -74,5 +73,6 @@ const computedSeoProps = {
 
   <footer class="mb-4 flex flex-col gap-">
     <Form client:only {...formProps} />
+    <FakeBuyer client:only />
   </footer>
 </Layout>
