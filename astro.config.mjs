@@ -47,14 +47,6 @@ export default defineConfig({
       css: true,
       js: true,
     }),
-    critters({
-      path: [
-        // inline dist
-        "./dist",
-
-        // inline dist one more time into a different directory
-        new Map([["./dist", "./dist-inlined"]]),
-      ],
-    }),
+    critters(),
   ],
 });
