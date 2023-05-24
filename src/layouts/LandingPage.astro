@@ -3,6 +3,7 @@ import { Props as SEOProps } from "astro-seo";
 import Logo from "../svg/Logo";
 import Layout from "../layouts/Layout.astro";
 import { Form, FormProps } from "../views/Form";
+import { FakeBuyer } from "../views/FakeBuyer";
 
 export interface Props extends SEOProps, FormProps {
   image: string;
@@ -30,6 +31,7 @@ const computedSeoProps = {
 };
 ---
 
+<FakeBuyer client:only />
 <Layout {...computedSeoProps} arrow>
   <header
     class="text-center py-6 flex flex-col items-center gap-4 lg:gap-2 mb-1 lg:mb-4"

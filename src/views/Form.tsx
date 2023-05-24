@@ -6,13 +6,13 @@ import {
   PLACEHOLDER_VALUE,
   SEPARATOR_VALUE,
 } from "../components/Select";
-import { API_URL } from "../constants/api";
 import { WA_API_URL, WA_NUMBERS } from "../constants/whatsapp";
 import { MESSAGE_TEMPLATE } from "../constants/misc";
 import { Input } from "../components/Input";
 import { WhatsAppIcon } from "../svg/WhatsApp";
 import { CheckoutIcon } from "../svg/Checkout";
 import { AnalyticsEventNames } from "../constants/events";
+import { fetchAPI } from "../utils/api";
 
 enum LocationKeys {
   PROVINCE = "provinsi",
@@ -35,19 +35,6 @@ const nanoid = (prefix: string) =>
   [prefix, customAlphabet("1234567890abcdef", 7)().toUpperCase()]
     .filter((item) => item)
     .join("-");
-
-const fetchAPI = async (paths: string[]) =>
-  fetch(`${API_URL}${paths.join("/")}.json`)
-    .then((response) => response.json())
-    .then((data) =>
-      data
-        .map(({ id: value, name: label, ...item }) => ({
-          label,
-          value,
-          ...item,
-        }))
-        .sort((a, z) => a.label.localeCompare(z.label))
-    );
 
 export const Form: FC<FormProps> = ({
   productId,
