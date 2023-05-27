@@ -605,7 +605,7 @@ const OrderNotification = forwardRef<HTMLDivElement, OrderNotificationProps>(
 );
 
 const getNewFormatDistanceDate = () =>
-  intlFormatDistance(subMinutes(new Date(), random(0, 1000)), new Date(), {
+  intlFormatDistance(subMinutes(new Date(), random(0, 450)), new Date(), {
     locale: "id",
   });
 
