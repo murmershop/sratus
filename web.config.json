@@ -1,6 +1,6 @@
 {
   "site": "https://murmer.shop",
-  "whatsapp": ["6285233658234"],
+  "whatsapp": ["6285236558234"],
   "gtm": "GTM-W6NW62C",
   "message": "Halo kak, saya mau pesan $produk:\n\nNama: $nama\nAlamat: $alamat\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #$orderId",
   "seo": {
