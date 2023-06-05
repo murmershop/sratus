@@ -4,6 +4,7 @@ import Logo from "../svg/Logo";
 import Layout from "../layouts/Layout.astro";
 import { Form, FormProps } from "../views/Form";
 import { FakeBuyer } from "../views/FakeBuyer";
+import { fakeorder } from "../../web.config.json";
 
 export interface Props extends SEOProps, FormProps {
   image: string;
@@ -73,6 +74,6 @@ const computedSeoProps = {
 
   <footer class="mb-4 flex flex-col gap-">
     <Form client:only {...formProps} />
-    <FakeBuyer client:only />
+    {fakeorder && <FakeBuyer client:only />}
   </footer>
 </Layout>
