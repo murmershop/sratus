@@ -5,7 +5,7 @@
   "message": "Halo kak, saya mau pesan $produk:\n\nNama: $nama\nAlamat: $alamat\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #$orderId",
   "fakeorder": false,
   "seo": {
-    "title": "Toko 100% Serba Murah Meriah",
+    "title": "Toko 100% Murah Meriah",
     "titleTemplate": "%s - SRATUS.STORE",
     "description": "Beli produk-produk retail dengan harga promo murah meriah hanya di SRATUS.STORE"
   }
