@@ -1,3 +1,3 @@
-# MURMER.SHOP Official Website Repository
+# SRATUS.STORE Official Website Repository
 
 Money is happyness.

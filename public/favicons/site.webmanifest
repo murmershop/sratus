@@ -1,6 +1,6 @@
 {
-    "name": "MURMER.SHOP",
-    "short_name": "MURMER.SHOP",
+    "name": "SRATUS.STORE",
+    "short_name": "SRATUS.STORE",
     "icons": [
         {
             "src": "/favicons/android-chrome-192x192.png",
@@ -15,5 +15,6 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
+    "start_url": "https://sratus.store",
     "display": "standalone"
 }

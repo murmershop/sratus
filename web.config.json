@@ -1,12 +1,12 @@
 {
-  "site": "https://murmer.shop",
+  "site": "https://sratus.store",
   "whatsapp": ["6285236558234"],
   "gtm": "GTM-W6NW62C",
   "message": "Halo kak, saya mau pesan $produk:\n\nNama: $nama\nAlamat: $alamat\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #$orderId",
   "fakeorder": false,
   "seo": {
-    "title": "Toko Serba Murah Meriah",
-    "titleTemplate": "%s - MURMER.SHOP",
-    "description": "Dapatkan produk-produk berkualitas dengan harga murah meriah hanya di MURMER.SHOP"
+    "title": "Toko 100 Serba Murah Meriah",
+    "titleTemplate": "%s - SRATUS.STORE",
+    "description": "Beli produk-produk retail dengan harga promo murah meriah hanya di SRATUS.STORE"
   }
 }
