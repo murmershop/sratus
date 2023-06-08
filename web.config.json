@@ -1,7 +1,7 @@
 {
   "site": "https://sratus.store",
-  "whatsapp": ["GTM-PLX4H95"],
-  "gtm": "GTM-W6NW62C",
+  "whatsapp": ["6285236558234"],
+  "gtm": "GTM-PLX4H95",
   "message": "Halo kak, saya mau pesan $produk:\n\nNama: $nama\nAlamat: $alamat\n\nMohon segera dicek ongkirnya, Terima kasih!\n---\nOrder ID: #$orderId",
   "fakeorder": false,
   "seo": {
